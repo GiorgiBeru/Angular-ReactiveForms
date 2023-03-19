@@ -19,24 +19,25 @@ import { Customer } from './customer';
 export class CustomerComponent implements OnInit {
   customerForm: FormGroup | undefined;
   customer = new Customer();
-
+  emailForm: FormGroup | undefined = this.fb.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      confirmEmail: ['', [Validators.required]],
+    },
+    { validator: validateConfirmEmail }
+  );
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.customerForm = this.buildForm();
+    // console.log(this.customerForm, 'formGroup Cursotmer');
   }
 
   buildForm() {
     return this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
-      emailGroup: this.fb.group(
-        {
-          email: ['', [Validators.required, Validators.email]],
-          confirmEmail: ['', [Validators.required]],
-        },
-        { validator: validateConfirmEmail }
-      ),
+      emailGroup: this.emailForm,
       phone: [''],
       notification: 'email',
       rating: [null, validateRange(2, 5)],
@@ -53,7 +54,8 @@ export class CustomerComponent implements OnInit {
       lastName: 'blu',
       sendCatalog: false,
     });
-    console.log(this.customerForm);
+
+    // console.log(this.customerForm);
   }
 
   setNotificationType(notifyVia: string): void {
@@ -76,7 +78,6 @@ function validateRange(min: number, max: number): ValidatorFn {
     }
   };
 }
-
 function validateConfirmEmail(
   c: AbstractControl
 ): { [key: string]: boolean } | null {

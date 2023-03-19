@@ -4,9 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CustomerComponent } from './customers/customer.component';
+import { EmailGroupComponent } from './email-group/email-group.component';
+
 
 @NgModule({
-  declarations: [AppComponent, CustomerComponent],
+  declarations: [AppComponent, CustomerComponent, EmailGroupComponent],
   imports: [BrowserModule, ReactiveFormsModule],
   bootstrap: [AppComponent],
 })
